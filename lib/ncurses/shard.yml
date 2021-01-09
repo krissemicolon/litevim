@@ -1,0 +1,7 @@
+name: ncurses
+version: 0.1.0
+
+authors:
+  - Naomichi Agata <agatan039@gmail.com>
+
+license: MIT

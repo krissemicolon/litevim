@@ -1,0 +1,14 @@
+name: litevim
+version: 0.1.0
+
+authors:
+  - krissemicolon <krissemicolon@gmail.com>
+
+description: |
+  Ultrasmall vim-like terminal based editor
+
+dependencies:
+  ncurses:
+    github: agatan/ncurses.cr
+
+license: GPLv3
