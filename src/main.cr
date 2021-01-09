@@ -1,29 +1,39 @@
 require "ncurses"
 
-NCurses.open do
-  # initialize
-  NCurses.cbreak
-  NCurses.noecho
-  NCurses.start_color
+main()
+def main()
+    filecontent = File.read("file.txt")
+    NCurses.open do
+        init()
+        backgroundColor()
+        # move the cursor
+        NCurses.move(x: 0, y: 1)
+        # longname returns the verbose description of the current terminal
+        NCurses.addstr(NCurses.longname)
 
-  # define background color
-  pair = NCurses::ColorPair.new(1).init(NCurses::Color::RED, NCurses::Color::BLACK)
-  NCurses.bkgd(pair)
+        NCurses.move(x: 0, y: 2)
+        NCurses.addstr(NCurses.curses_version)
 
-  NCurses.erase
-  # move the cursor
-  NCurses.move(x: 0, y: 1)
-  # longname returns the verbose description of the current terminal
-  NCurses.addstr(NCurses.longname)
+        NCurses.move(y: 100, x: 20)
+        NCurses.addstr("LiteVim")
+        NCurses.refresh
 
-  NCurses.move(x: 0, y: 2)
-  NCurses.addstr(NCurses.curses_version)
+        NCurses.notimeout(true)
+        NCurses.getch
+    end
+end
 
-  NCurses.move(y: 10, x: 20)
-  NCurses.addstr("Hello, world!")
-  NCurses.refresh
+# initialize TUI
+def init
+    NCurses.cbreak
+    NCurses.noecho
+    NCurses.start_color
+end
 
-  NCurses.notimeout(true)
-  NCurses.getch
+# define background color
+def backgroundColor
+    pair = NCurses::ColorPair.new(1).init(NCurses::Color::WHITE, NCurses::Color::BLACK)
+    NCurses.bkgd(pair)
+    NCurses.erase
 end
 
