@@ -1,0 +1,5 @@
+# Define Colorscheme
+# Available Colorschemes:
+# - stealthblack
+# - alpinewhite
+colorscheme: alpinewhite

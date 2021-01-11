@@ -1,4 +1,2 @@
-
-main(argc : Int32, argv : Pointer(Pointer(UInt8)))
-    puts ""
-end
+filecontent = File.read("file.txt")
+puts filecontent

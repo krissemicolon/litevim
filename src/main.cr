@@ -1,39 +1,42 @@
 require "ncurses"
+require "yaml"
 
-main()
-def main()
-    filecontent = File.read("file.txt")
-    NCurses.open do
-        init()
-        backgroundColor()
-        # move the cursor
-        NCurses.move(x: 0, y: 1)
-        # longname returns the verbose description of the current terminal
-        NCurses.addstr(NCurses.longname)
+Ymax, Xmax = NCurses.maxyx
 
-        NCurses.move(x: 0, y: 2)
-        NCurses.addstr(NCurses.curses_version)
+# Main
+NCurses.open do
+    init()
+    backgroundColor()
+    NCurses.erase
+    # move the cursor
+    NCurses.move(x: 0, y: 1)
+    # longname returns the verbose description of the current terminal
 
-        NCurses.move(y: 100, x: 20)
-        NCurses.addstr("LiteVim")
-        NCurses.refresh
+    NCurses.move(x: 0, y: 2)
+    NCurses.addstr(NCurses.curses_version)
 
-        NCurses.notimeout(true)
-        NCurses.getch
-    end
+    NCurses.move(y: 10, x: 20)
+    NCurses.addstr("LiteVim")
+    NCurses.refresh
+    NCurses.getch
 end
 
-# initialize TUI
-def init
+def getConfig()
+    YAML.parse(File.read("config.yml"))
+end
+
+def init()
+    # initialize
     NCurses.cbreak
     NCurses.noecho
     NCurses.start_color
 end
 
-# define background color
-def backgroundColor
-    pair = NCurses::ColorPair.new(1).init(NCurses::Color::WHITE, NCurses::Color::BLACK)
-    NCurses.bkgd(pair)
-    NCurses.erase
+def backgroundColor()
+    # Colorschemes 
+    stealthblack = NCurses::ColorPair.new(1).init(NCurses::Color::WHITE, NCurses::Color::BLACK)
+    alpinewhite = NCurses::ColorPair.new(1).init(NCurses::Color::BLACK, NCurses::Color::WHITE)
+    
+    NCurses.bkgd(stealthblack)
 end
 
