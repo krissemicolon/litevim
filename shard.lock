@@ -1,6 +1,0 @@
-version: 2.0
-shards:
-  ncurses:
-    git: https://github.com/agatan/ncurses.cr.git
-    version: 0.1.0+git.commit.a667a848b336da831dd7c69f793d660538fcc0de
-
