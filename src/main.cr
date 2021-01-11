@@ -1,42 +1,40 @@
 require "ncurses"
-require "yaml"
 
-Ymax, Xmax = NCurses.maxyx
-
-# Main
 NCurses.open do
-    init()
-    backgroundColor()
-    NCurses.erase
-    # move the cursor
-    NCurses.move(x: 0, y: 1)
-    # longname returns the verbose description of the current terminal
-
-    NCurses.move(x: 0, y: 2)
-    NCurses.addstr(NCurses.curses_version)
-
-    NCurses.move(y: 10, x: 20)
-    NCurses.addstr("LiteVim")
-    NCurses.refresh
-    NCurses.getch
-end
-
-def getConfig()
-    YAML.parse(File.read("config.yml"))
-end
-
-def init()
-    # initialize
+    # Init
     NCurses.cbreak
     NCurses.noecho
-    NCurses.start_color
-end
+    NCurses.keypad(true)
 
-def backgroundColor()
-    # Colorschemes 
-    stealthblack = NCurses::ColorPair.new(1).init(NCurses::Color::WHITE, NCurses::Color::BLACK)
-    alpinewhite = NCurses::ColorPair.new(1).init(NCurses::Color::BLACK, NCurses::Color::WHITE)
+    # Getting Max Y, X
+    maxY, maxX = NCurses.maxy, NCurses.maxx
+    maxY -= 1
+    maxX -= 1
+
+    # Getting File
+    filename = ARGV[0]
+    filecontent = File.read_lines(filename)
+
+    NCurses.start_color
+    pair = NCurses::ColorPair.new(1).init(NCurses::Color::WHITE, NCurses::Color::BLACK)
+    NCurses.bkgd(pair)
+
+    NCurses.erase
+    NCurses.move(x: 0, y: maxY)
+    NCurses.addstr("LiteVim")
     
-    NCurses.bkgd(stealthblack)
+    pos = 0
+    filecontent.each do |i|
+        NCurses.move(x: 0, y: pos)
+        pos += 1
+        NCurses.addstr(i)
+        puts i
+    end
+
+
+    NCurses.refresh
+
+    NCurses.notimeout(true)
+    NCurses.getch
 end
 
